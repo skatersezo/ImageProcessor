@@ -38,6 +38,7 @@ object Pixel {
   val RED = Pixel(255, 0,0)
   val GREEN = Pixel(0,255,0)
   val BLUE = Pixel(0,0,255)
+  val GRAY = Pixel(128,128,128)
 
   def clamp(v: Int): Int = {
     if v <= 0 then 0
@@ -49,6 +50,12 @@ object Pixel {
     val red = Pixel(255, 0, 0)
     val green = Pixel(0, 255, 0)
     val yellow = red + green
-    yellow.draw(40, 40, "src/main/resources/pixels/new-yellow.jpg")
+    val pink = Transparency(0.5).combine(RED, WHITE)
+    val darkRed = Multiply.combine(RED, GRAY)
+    val lightRed = Screen.combine(RED, GRAY)
+    //yellow.draw(40, 40, "src/main/resources/pixels/new-yellow.jpg")
+    //pink.draw(40, 40, "src/main/resources/pixels/pink.jpg")
+    //darkRed.draw(40, 40, "src/main/resources/pixels/dark-red.jpg")
+    lightRed.draw(40, 40, "src/main/resources/pixels/light-red.jpg")
   }
 }
