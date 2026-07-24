@@ -1,5 +1,7 @@
 package com.ivanespinosa.imageprocessor
 
+// source: https://en.wikipedia.org/wiki/Blend_modes
+
 trait BlendMode {
   def combine(foreground: Pixel, background: Pixel): Pixel
 }
@@ -38,5 +40,18 @@ object Screen extends BlendMode {
       (255 - (255 - foreground.red) * (255 - background.red) / 255.0).toInt,
       (255 - (255 - foreground.green) * (255 - background.green) / 255.0).toInt,
       (255 - (255 - foreground.blue) * (255 - background.blue) / 255.0).toInt,
+    )
+}
+
+object Overlay extends BlendMode {
+  private def f(a: Double, b: Double): Double =
+    if a < 0.5 then 2 * a * b
+    else 1 - 2 * (1-a) * (1-b)
+
+  override def combine(foreground: Pixel, background: Pixel): Pixel =
+    Pixel(
+      (255 * f(background.red / 255.0, foreground.red / 255.0)).toInt,
+      (255 * f(background.green / 255.0, foreground.green / 255.0)).toInt,
+      (255 * f(background.blue / 255.0, foreground.blue / 255.0)).toInt,
     )
 }
